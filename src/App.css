@@ -1,0 +1,16 @@
+/* App.css */
+
+.container {
+  display: flex;
+}
+
+.left-component {
+  flex: 0.5;
+  padding: 20px;
+}
+
+.right-component {
+  flex: 1.5;
+  padding: 20px;
+  background-image: "https://images.pexels.com/photos/552785/pexels-photo-552785.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
+}
