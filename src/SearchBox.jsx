@@ -1,27 +1,56 @@
 
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
-function SearchBox({news}) {
-  const [val,setval]=useState('')
-  const srh=()=>(
-     news(val)
-  )
+export default function SearchBox({news}) {
+  const [c,setc]=useState([])
+  const [val,setval]=useState("")
+  useEffect(()=>{
+      fetch("https://countriesnow.space/api/v0.1/countries/population/cities")
+      .then(response => response.json())
+      .then(data => {
+    // Check if data and cities array exist
+       if (data && data.data) {
+      // Extract city names from the response
+      const cityNames = data.data.reduce((acc, cityInfo) => {
+        if (cityInfo.city) {
+          acc.push(cityInfo.city);
+        }
+        return acc;
+      }, []);
+      setc(cityNames)
+    }
+    }
+    )
+    
+  },[])
 
+  const srh=()=>{
+    return(
+    news(val)
+    )
+  }
+  
+  
   return (
-    <>
     <div className='flex display-flex'>
-    <input
-        className="bg-gray-100 focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 mb-2 block w-full appearance-none leading-normal"
-        type="text"
-        placeholder="Enter City"
-        onChange={(e)=>{
-          setval(e.target.value)
-        }}
-        />
-        <button className="bg-white py-2 px-4 mb-2 rounded-lg ml-1 text-blue-500" onClick={srh}>Search</button>
-        </div>
-    </>
+    <Autocomplete
+      className='bg-gray-200 mb-2'
+      disablePortal
+      id="combo-box-demo"
+      options={c}
+      sx={{ width: 600}}
+      renderInput={(params) => <TextField {...params} label="City"  />}
+      onChange={(event, newValue) => {
+        // Update state with the selected option
+        setval(newValue);
+      }}
+     
+      
+    />
+    <button className="bg-white py-2 px-4 mb-2 rounded-lg ml-1 text-blue-500" onClick={srh}>Search</button>
+    </div>
+
   );
 }
-
-export default SearchBox;
