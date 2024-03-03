@@ -7,6 +7,9 @@ import SearchBox from './SearchBox';
 import CurrLoc from './CurrLoc';
 
 function App() {
+  const currentDate = new Date();
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  let counter=0;
   const [fc, setfc] = useState({});
   const [err,seterr]=useState(null);
   const [loc,setloc]=useState({})
@@ -16,7 +19,7 @@ function App() {
     console.log(VB)
     const svb = VB
     const apiKey = 'b1a6285342f0ef405347eb7603ee78a1';
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${svb}&appid=${apiKey}`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${svb}&cnt=7&appid=${apiKey}`)
     .then((res) => {
       if (!res.ok) {
         alert('Incorrect City!');
@@ -25,9 +28,12 @@ function App() {
       return res.json();
     })
     .then((res) => {
+      console.log(res)
       // Handle the successful response (status code 200)
       setfc(res);
     })
+    
+
 
   };
   useEffect(()=>{
@@ -72,20 +78,26 @@ function App() {
       ):(
         <>
         <SearchBox news={nowFilter} />
-        <div className="flex flex-wrap">
-          {(Object.keys(fc).length !== 0) ? (
+        <div className="flex">
+        {fc && fc["list"] && fc["city"] ? (
+          fc["list"].map((curval, index) => (
             <CityApp
-              cty={fc["name"]}
-              temp={parseInt(fc["main"]["temp"]) - 273}
-              des={fc["weather"]["0"]["main"]}
-              hum={fc["main"]["humidity"]}
-              feel={parseInt(fc["main"]["feels_like"]) - 273}
-              country={fc["sys"]["country"]}
-            />
-          ) : (
-           <></>
-          )}
-        </div>
+              k={index}
+              curd={daysOfWeek[currentDate.getDay()+index]}
+              cty={fc["city"]["name"]}
+              temp={parseInt(curval["main"]["temp"]) - 273}
+              des={curval["weather"]["0"]["main"]}
+              hum={curval["main"]["humidity"]}
+              feel={parseInt(curval["main"]["feels_like"]) - 273}
+              country={fc["city"]["country"]}
+            /> 
+          ))
+        ) : (
+          // Render a fallback or loading component if fc is not truthy
+          <p>Loading...</p>
+        )}
+      </div>
+
         </>
 
       )}
