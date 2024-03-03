@@ -78,25 +78,29 @@ function App() {
       ):(
         <>
         <SearchBox news={nowFilter} />
-        <div className="flex">
+        
         {fc && fc["list"] && fc["city"] ? (
-          fc["list"].map((curval, index) => (
-            <CityApp
-              k={index}
-              curd={daysOfWeek[currentDate.getDay()+index]}
-              cty={fc["city"]["name"]}
-              temp={parseInt(curval["main"]["temp"]) - 273}
-              des={curval["weather"]["0"]["main"]}
-              hum={curval["main"]["humidity"]}
-              feel={parseInt(curval["main"]["feels_like"]) - 273}
-              country={fc["city"]["country"]}
-            /> 
-          ))
-        ) : (
-          // Render a fallback or loading component if fc is not truthy
-          <p>Loading...</p>
-        )}
+      <div className={fc["list"] !== 0 ? 'inline-grid grid-cols-3' : ''}>
+    {fc["list"].map((curval, index) => (
+      <div key={index}>
+        <CityApp
+          k={index}
+          curd={daysOfWeek[currentDate.getDay() + index]}
+          cty={fc["city"]["name"]}
+          temp={parseInt(curval["main"]["temp"]) - 273}
+          des={curval["weather"]["0"]["main"]}
+          hum={curval["main"]["humidity"]}
+          feel={parseInt(curval["main"]["feels_like"]) - 273}
+          country={fc["city"]["country"]}
+        />
       </div>
+    ))}
+  </div>
+) : (
+  // Render a fallback or loading component if fc is not truthy
+  <p>Loading...</p>
+)}
+      
 
         </>
 

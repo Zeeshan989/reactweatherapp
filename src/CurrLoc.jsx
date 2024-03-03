@@ -56,25 +56,25 @@ function CurrLoc({ cty, temp,des,hum,feel,country}) {
 
  
   return (
-    <div className="max-w-sm mx-2 overflow-hidden shadow-lg p-3 rounded-lg" style={backgroundStyle}>
-        <h1 className="font-bold text-xl mb-2 text-red-500">Current Location</h1>
-      <div className="px-6 py-4" >
+    <div className="h-300 w-100 max-w-sm mx-2 overflow-hidden shadow-lg p-3 rounded-lg" style={backgroundStyle}>
+        <h1 className="font-bold text-centre text-xl py-20 mb-2 px-20 text-black">Current Location</h1>
+      <div className="px-6 py-20" >
         {(temp<20)?(<img
         src="https://cdn-icons-png.freepik.com/512/6805/6805180.png"
         alt="Description of the image"
-        style={{ width: '150px', height: '100px' }}
+        style={{ width: '300px', height: '200px' }}
       />):( <img
         src="https://cdn-icons-png.freepik.com/512/6805/6805171.png"
         alt="Description of the image"
-        style={{ width: '150px', height: '100px' }}
+        style={{ width: '300px', height: '200px' }}
       />  )}
         <div className="font-bold text-xl mb-2 text-white">{cty},{country}</div>
         <p className="text-l text-white text-base ">Temperature:   {temp} ℃</p>
         <p className="text-l text-white text-base ">Condition: {des}</p>
         <p className="text-l text-white text-base ">Humidity:  {hum}</p>
         <p className="text-l text-white text-base ">Feels Like:    {feel} ℃</p>
-        <p className="text-l font-bold text-right text-red-500 text-base">{tim}</p>
-        <p className="text-l font-bold text-right text-blue-500 text-base">{dt}</p>
+        <p className="text-l pl-20 font-bold text-right text-red-500 text-base">{tim}</p>
+        <p className="text-l pl-20 font-bold text-right text-blue-500 text-base">{dt}</p>
         
         
 
