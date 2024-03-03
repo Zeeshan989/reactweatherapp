@@ -15,7 +15,7 @@ export default function SearchBox({news}) {
       // Extract city names from the response
       const cityNames = data.data.reduce((acc, cityInfo) => {
         if (cityInfo.city) {
-          acc.push(cityInfo.city);
+          acc.push(`${cityInfo.city},${cityInfo.country}`);
         }
         return acc;
       }, []);
